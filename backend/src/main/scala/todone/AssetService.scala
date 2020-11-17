@@ -10,6 +10,7 @@ import org.http4s.server.staticcontent._
  * interface.
  */
 object AssetService {
-  def service(blocker: Blocker)(implicit cs: ContextShift[IO]): HttpRoutes[IO] =
-    fileService(FileService.Config("./backend/assets/", blocker))
+  def service(blocker: Blocker)(implicit cs: ContextShift[IO]): HttpRoutes[IO] = {
+    fileService(FileService.Config("./assets/", blocker))
+  }
 }
