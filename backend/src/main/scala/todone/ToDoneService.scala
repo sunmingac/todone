@@ -2,7 +2,6 @@ package todone
 
 import cats.effect.IO
 import org.http4s.HttpRoutes
-
 import todone.data._
 
 /**
@@ -21,7 +20,7 @@ object ToDoneService {
           Tasks(
             List(
               Id(1) -> Task(
-                State.open,
+                State.closed,
                 "Play with the ToDone interface",
                 "",
                 None,
@@ -35,5 +34,23 @@ object ToDoneService {
             )
           )
         Ok(tasks)
+      case POST -> Root / "task" / IntVar(id) / StateVar(state) =>
+        val task = Id(id) -> Task(
+                state,
+                "Play with the ToDone interface",
+                "",
+                None,
+                Tags.empty)
+        Ok(task)
     }
+
+  case object StateVar {
+    def unapply(str: String): Option[State] = str match {
+      case "open" => Some(State.open)
+      case "close" => Some(State.closed)
+      case _ => None
+    }
+  }
+
+
 }
